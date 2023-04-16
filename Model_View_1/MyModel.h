@@ -2,6 +2,7 @@
 #define MYMODEL_H
 
 #include <QAbstractTableModel>
+#include <QTimer>
 
 class MyModel : public QAbstractTableModel {
     Q_OBJECT
@@ -12,6 +13,12 @@ class MyModel : public QAbstractTableModel {
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index,
                   int role = Qt::DisplayRole) const override;
+
+  private slots:
+    void timerHint();
+
+  private:
+    QTimer *m_timer;
 };
 
 #endif // MYMODEL_H
