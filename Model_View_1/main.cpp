@@ -1,5 +1,3 @@
-#include "MainWindow.h"
-
 #include "MyModel.h"
 #include <QApplication>
 #include <QTableView>
