@@ -6,3 +6,101 @@ Examples of events are mouse presses and key strokes.
 - Qt User Interface Compiler(uic)
 reads the .ui file and creates a corresponding C++ header file, ui_notepad.h.
 - <qt_installation_directory>\bin\qt-cmake -GNinja <source_directory>
+
+# Qt for Beginners
+- How a Qt program is compiled
+    - 1. A .pro file is written to describe the project to compile
+    - 2. A makefile is generated using qmake
+    - 3. The program is built using make (or nmake or jom on windows)
+- Qt class hierarchy
+    - QObject 
+    The most basic class
+        - object name, a string
+        - parenting system
+        - signals and slots
+        - event management
+- Parenting system
+    - When an object is destroyed, all of its children are destroyed as well.
+    - All QObjects have findChild and findChildren methods that can be used to search for children of a given object.
+    - Child widgets in a QWidget automatically appear inside the parent widget.
+- The Meta Object
+    - Introspection : capability of examining a type at run-time
+    - Asynchronous function calls
+    - Code produced by moc
+        - signals and slots
+        - methods that are used to retrieve meta-information from those marked class
+        - properties handling
+        - ...
+- Important macros
+    - Q_OBJECT 
+    The moc is provided to translate the QT syntax like "connect", "signals", "slots", etc into regular C++ syntax.
+    - slot signature and signal signature
+- Creating custom signals and slots
+    - add Q_OBJECT macro, require public inherit from QObject
+    - add signals section, and write signals prototypes
+    - add public slots or protected slots or private slots sections, and - write slots prototypes
+    - implement slots as normal methods
+    - establish connections
+# Model/View Tutorial
+- 在GUI中，表格、列表和树形小部件是常用的组件。这些小部件可以通过两种不同的方式访问数据。
+    - 在GUI中，表格、列表和树形小部件是常用的组件。这些小部件可以通过两种不同的方式访问数据。
+    - ModelView编程方式：小部件不维护内部数据容器，而是通过标准接口访问外部数据，避免了数据重复。
+    这种方式一开始可能看起来比较复杂，但一旦您仔细学习，就会发现它不仅易于掌握，而且其众多优点也变得更加清晰。
+- Qt提供的基本技术
+    - 标准小部件和模型/视图小部件的区别
+    - 表单和模型之间的适配器
+    - 开发一个简单的模型/视图应用程序
+    - 预定义的模型
+    - 中级主题，例如
+        - 树形界面
+        - 选择
+        - 委托
+        - 使用模型测试
+- 此外，您还将学习如何确定您的新应用程序是否可以使用模型/视图编程更轻松地编写，或者经典小部件同样适用。
+本教程包含示例代码供您编辑和集成到您的项目中。教程的源代码位于Qt的examples/widgets/tutorials/modelview目录中。
+如果需要更详细的信息，您可能还需要查阅参考文档。
+- 1 Introduction
+    - Model/View是一种技术，用于在处理数据集的小部件中将数据与视图分离。
+    标准小部件并不是为了分离数据与视图而设计的，这就是为什么Qt有两种不同类型的小部件。
+    两种类型的小部件看起来相同，但它们与数据的交互方式不同。
+    - 1.1 Standard Widgets
+        - 让我们更仔细地看一下标准表格小部件。
+        表格小部件是一个二维数组，由用户可以更改的数据元素组成。
+        通过读取和写入表格小部件提供的数据元素，可以将表格小部件集成到程序流程中。
+        这种方法在许多应用程序中非常直观和有用，但使用标准表格小部件显示和编辑数据库表可能会出现问题。
+        必须协调数据的两个副本：一个在小部件外部，一个在小部件内部。开发人员需要负责同步两个版本。
+        此外，演示和数据之间的紧密耦合使得编写单元测试更加困难。
+    - 1.2 Model/View to the Rescue
+        - Model/view采用更灵活的架构提供了一个解决方案，消除了标准小部件可能出现的数据一致性问题。
+        Model/view还使得使用相同数据的多个视图更容易，因为一个模型可以传递给多个视图。
+        最重要的区别是，model/view小部件不在表格单元格后面存储数据。
+        实际上，它们直接从您的数据中操作。
+        由于视图类不知道您的数据结构，因此您需要提供一个包装器，使您的数据符合QAbstractItemModel接口。
+        视图使用此接口从您的数据中读取和写入数据。
+        实现QAbstractItemModel的类的任何实例都被称为模型。
+        一旦视图接收到指向模型的指针，它就会读取和显示其内容，并成为其编辑器。
+    - 1.3 Overview of the Model/View Widgets
+        - Here is an of the model/view widgets and their corresponding standard widgets.
+        - QListWidget QListView
+        - QTableWidget QTableView
+        - QTreeWidget QTreeView
+        - QComboBox
+    - 1.4 Using Adapters between Form and Models
+        - 在表单和模型之间使用适配器非常方便。
+        我们可以直接在表格中编辑存储在其中的数据，但是在文本字段中编辑数据更加方便。
+        对于操作一个值（QLineEdit、QCheckBox等）而不是数据集的小部件，没有直接的模型/视图对应物，因此我们需要一个适配器来将表单连接到数据源。
+        - QDataWidgetMapper是一个很好的解决方案，因为它将表单小部件映射到表行，并且非常容易为数据库表构建表单。
+        - 另一个适配器的例子是QCompleter。
+        Qt提供了QCompleter用于在Qt小部件（例如QComboBox和QLineEdit）中提供自动完成。
+        QCompleter使用模型作为其数据源。
+- 2 A Simple Model/View Application
+    - 如果你想开发一个模型/视图应用程序，你应该从哪里开始呢？
+    我们建议从一个简单的示例开始，并逐步扩展它。这样可以更容易地理解架构。
+    对于许多开发人员来说，在调用 IDE 之前详细了解模型/视图架构的复杂性已经被证明不是很方便。
+    从一个简单的模型/视图应用程序开始，该应用程序具有演示数据，这样做起来更容易。不妨试试！只需将下面示例中的数据替换为您自己的数据即可。
+    - 以下是7个非常简单且独立的应用程序，展示了模型/视图编程的不同方面。
+    源代码可以在examples/widgets/tutorials/modelview目录中找到。
+    MyModel::rowCount()和MyModel::columnCount()方法提供了行和列的数量。当视图需要知道单元格的文本时，它会调用MyModel::data()方法。行和列信息由index参数指定，角色设置为Qt::DisplayRole。其他角色将在下一节中介绍。在我们的示例中，生成应显示的数据。在实际应用程序中，MyModel将拥有一个名为MyData的成员，它是所有读取和写入操作的目标。
+    
+    这个小例子展示了模型的被动性。模型并不知道何时会被使用或需要哪些数据，它只在每次视图请求数据时提供数据。
+    当模型的数据需要更改时会发生什么呢？视图如何意识到数据已更改并需要重新读取？模型必须发出一个信号，指示已更改哪个单元格范围。这将在2.3节中进行演示。
