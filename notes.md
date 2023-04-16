@@ -130,3 +130,9 @@ reads the .ui file and creates a corresponding C++ header file, ui_notepad.h.
         在使时钟滴答的代码中缺少一些内容。我们需要每秒钟告诉视图时间已经改变，并且需要重新读取。我们可以使用一个定时器来实现这一点。在构造函数中，我们将其间隔设置为1秒，并连接其timeout信号。
 
         我们通过发出 dataChanged() 信号请求视图再次读取左上角单元格中的数据。请注意，我们没有显式连接 dataChanged() 信号到视图。这是在调用 setModel() 时自动发生的。
+    - 2.4 Setting up Headers for Columns and Rows
+        - 表头可以通过视图方法进行隐藏：tableView->verticalHeader()->hide();
+        - 然而，标题内容是由Model设置的，因此我们需要重新实现headerData()方法：
+        - 注意，headerData() 方法也有一个 role 参数，它与 MyModel::data() 中的 role 参数的含义相同。
+        - 如果headerData没有根据传入的role返回正确类型，表头会直接不显示
+    

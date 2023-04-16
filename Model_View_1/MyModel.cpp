@@ -25,6 +25,24 @@ QVariant MyModel::data(const QModelIndex &index, int role) const {
     return QVariant();
 }
 
+QVariant MyModel::headerData(int section, Qt::Orientation orientation,
+                             int role) const {
+    if (orientation == Qt::Horizontal && role == Qt::DisplayRole) {
+        switch (section) {
+        case 0:
+            return QString("first");
+        case 1:
+            return QString("second");
+        case 2:
+            return QString("third");
+        }
+    }
+
+    return QVariant();
+    // 必须根据role返回正确属性，否则会出问题，比如表头不显示
+    // return QString();
+}
+
 void MyModel::timerHint() {
     // we identify the top left cell
     QModelIndex topLeft = createIndex(0, 0);
