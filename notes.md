@@ -135,4 +135,16 @@ reads the .ui file and creates a corresponding C++ header file, ui_notepad.h.
         - 然而，标题内容是由Model设置的，因此我们需要重新实现headerData()方法：
         - 注意，headerData() 方法也有一个 role 参数，它与 MyModel::data() 中的 role 参数的含义相同。
         - 如果headerData没有根据传入的role返回正确类型，表头会直接不显示
-    
+    - 2.5 The Minimal Editing Example
+        - 在这个示例中，我们将构建一个应用程序，通过重复输入到表格单元格中的值来自动填充窗口标题。为了能够轻松访问窗口标题，我们将QTableView放置在QMainWindow中。
+
+        - 模型决定是否可用编辑功能。我们只需要修改模型，就可以启用可用的编辑功能。这是通过重新实现以下虚拟方法来完成的：setData()和flags()。
+
+        - 我们使用二维数组QString m_gridData来存储数据。
+        这使得m_gridData成为MyModel的核心。
+        MyModel的其余部分充当包装器，将m_gridData适配到QAbstractItemModel接口。
+        我们还引入了editCompleted()信号，使得可以将修改后的文本传递到窗口标题中。
+        - 每次用户编辑单元格时，setData() 函数都会被调用。index 参数告诉我们哪个字段被编辑了，value 参数提供了编辑过程的结果。
+        由于我们的单元格只包含文本，所以角色(role) 将始终被设置为 Qt::EditRole。
+        如果存在复选框并且用户权限设置允许选择复选框，则调用也将使用 Qt::CheckStateRole 设置角色。
+3 Intermediate Topics
