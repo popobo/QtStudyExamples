@@ -157,3 +157,5 @@ reads the .ui file and creates a corresponding C++ header file, ui_notepad.h.
     在之前的例子中，我们将数据封装到了模型中。
     这一次，我们使用QStandardItemModel，它是一个容器，可用于存储分层数据并实现QAbstractItemModel。
     为了显示一个树形结构，QStandardItemModel必须使用QStandardItem进行填充，QStandardItem能够保存所有项目的标准属性，如文本、字体、复选框或刷子等。
+    - 我们可以通过实例化一个QStandardItemModel并在构造函数中添加几个QStandardItems来创建一个层次结构数据结构。
+    由于QStandardItem可以包含其他QStandardItems，因此我们可以创建一个分层数据结构。在视图中，节点可以展开和折叠。

@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
   item->appendRow(preparedRow);
 
   auto secondRow = prepareRow("111", "222", "333");
+  // "fisrt" append "111", "222", "333"
   preparedRow.first()->appendRow(secondRow);
 
   m_treeView->setModel(m_standardItemModel);
