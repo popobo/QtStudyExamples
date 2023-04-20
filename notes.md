@@ -148,3 +148,12 @@ reads the .ui file and creates a corresponding C++ header file, ui_notepad.h.
         由于我们的单元格只包含文本，所以角色(role) 将始终被设置为 Qt::EditRole。
         如果存在复选框并且用户权限设置允许选择复选框，则调用也将使用 Qt::CheckStateRole 设置角色。
 3 Intermediate Topics
+    - 你可以将上面的示例转换为一个带有树形视图的应用程序。
+    只需将QTableView替换为QTreeView，这将得到一个可读/可写的树形视图。
+    不需要对模型进行任何更改。
+    由于模型本身没有层次结构，因此树将不会有任何层次结构。
+    - QListView、QTableView 和 QTreeView 都使用了一个抽象的数据模型（model），这个模型提供了一个合并了列表、表格和树形结构的接口，这使得我们可以从同一个数据模型中使用多个不同类型的视图类。
+    - 我们想要展示一个真正的树形结构。
+    在之前的例子中，我们将数据封装到了模型中。
+    这一次，我们使用QStandardItemModel，它是一个容器，可用于存储分层数据并实现QAbstractItemModel。
+    为了显示一个树形结构，QStandardItemModel必须使用QStandardItem进行填充，QStandardItem能够保存所有项目的标准属性，如文本、字体、复选框或刷子等。

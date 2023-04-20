@@ -4,17 +4,23 @@
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
-class QTableView;
+class QTreeView;
+class QStandardItemModel;
+class QStandardItem;
 QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
 public:
     explicit MainWindow(QWidget *parent = nullptr);
+    ~MainWindow();
+
 private:
-    QTableView *m_tableView;
-public slots:
-    void showWindowTitle(const QString& title);
+    QTreeView* m_treeView;
+    QStandardItemModel* m_standardItemModel;
+    QList<QStandardItem* > prepareRow(const QString& first,
+                                      const QString& second,
+                                      const QString& third) const;
 };
 
 #endif // MAINWINDOW_H
