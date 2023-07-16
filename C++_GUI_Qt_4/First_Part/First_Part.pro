@@ -12,6 +12,8 @@ TARGET = First_Part
 TEMPLATE = app
 
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    FindDialog.cpp
 
-HEADERS  +=
+HEADERS  += \
+    FindDialog.h
