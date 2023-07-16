@@ -1,11 +1,14 @@
 #include <QApplication>
-#include <QLabel>
+#include <QPushButton>
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    QLabel* label = new QLabel("<h2><i>Hello</i>"
-                               "<font color=red>Qt</font></h2>");
-    label->show();
-    return a.exec();
+    QApplication app(argc, argv);
+
+    QPushButton* button = new QPushButton("Quit");
+    QObject::connect(button, SIGNAL(clicked(bool)), &app, SLOT(quit()));
+
+    button->show();
+
+    return app.exec();
 }
